@@ -1,0 +1,11 @@
+.idea/
+*.iml
+/out/
+/bin/
+.project
+.classpath
+*.prefs
+/bin1/
+/target/
+*.class
+/pom.xml
