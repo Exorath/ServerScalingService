@@ -55,7 +55,7 @@ The name should must the gameId!
 ```
 
 
-##Environment
+## Environment
 | Name | Value |
 | --------- | --- |
 | MONGO_URI | {mongo_uri} |
