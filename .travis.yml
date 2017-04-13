@@ -1,0 +1,15 @@
+language: ruby
+services:
+  - docker
+script:
+  - version=${TRAVIS_TAG-latest} ;
+    if [ "$TRAVIS_TAG" == "" ]; then
+    version=latest;
+    fi ;
+    docker build -t exorath/serverscalingservice:${version} .;
+after_success:
+  - if [ -n "$TRAVIS_TAG" ]; then
+    docker login -u=exorath -p="$DOCKER_PASSWORD";
+    echo "version $TRAVIS_TAG" ;
+    docker push "exorath/serverscalingservice:$TRAVIS_TAG" ;
+    fi
