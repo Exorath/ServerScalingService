@@ -16,17 +16,43 @@
 
 package com.exorath.service.serverscaling;
 
-import io.fabric8.kubernetes.api.model.PodBuilder;
+import com.exorath.service.commons.mongoProvider.MongoProvider;
+import com.exorath.service.commons.portProvider.PortProvider;
+import com.exorath.service.commons.tableNameProvider.TableNameProvider;
+import com.exorath.service.connector.api.ConnectorServiceAPI;
+import com.exorath.service.serverscaling.service.ConnectorServiceProvider;
+import com.exorath.service.serverscaling.service.KubernetesScaler;
+import com.exorath.service.serverscaling.service.MongoService;
+import io.fabric8.kubernetes.client.DefaultKubernetesClient;
+import io.fabric8.kubernetes.client.KubernetesClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by toonsev on 4/11/2017.
  */
 public class Main {
-    public Main() {
+    private Service service;
+    private KubernetesScaler kubernetesScaler;
+    private static final Logger LOG = LoggerFactory.getLogger(com.exorath.service.connector.Main.class);
 
+    public Main() {
+        this.kubernetesScaler = new KubernetesScaler(service, getKubernetesClient(), getConnectorServiceProvider());
+        this.service = new MongoService(MongoProvider.getEnvironmentMongoProvider().getClient(), TableNameProvider.getEnvironmentTableNameProvider("DB_NAME").getTableName());
+        LOG.info("Service " + this.service.getClass() + " instantiated");
+        Transport.setup(service, PortProvider.getEnvironmentPortProvider());
+        LOG.info("HTTP Transport initiated");
+    }
+
+    private ConnectorServiceProvider getConnectorServiceProvider() {
+        return new ConnectorServiceProvider(new ConnectorServiceAPI(TableNameProvider.getEnvironmentTableNameProvider("CONNECTOR_SERVICE_ADDRESS").toString()));
+    }
+
+    private KubernetesClient getKubernetesClient() {
+        return new DefaultKubernetesClient(TableNameProvider.getEnvironmentTableNameProvider("KUBERNETES_ADDRESS").getTableName());
     }
 
     public static void main(String[] args) {
-
+        new Main();
     }
 }

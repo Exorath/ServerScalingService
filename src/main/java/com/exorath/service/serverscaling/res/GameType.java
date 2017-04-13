@@ -35,7 +35,7 @@ public class GameType {
     @Property("env")
     private HashMap<String, String> env;
     @Property("labels")
-    private List<String> labels;
+    private HashMap<String, String> labels;
 
     public GameType() {}
 
@@ -72,6 +72,8 @@ public class GameType {
     }
 
     public HashMap<String, String> getEnv() {
+        if(env == null)
+            return new HashMap<>();
         return env;
     }
 
@@ -80,11 +82,13 @@ public class GameType {
         return this;
     }
 
-    public List<String> getLabels() {
+    public HashMap<String, String> getLabels() {
+        if(labels == null)
+            return new HashMap<>();
         return labels;
     }
 
-    public GameType setLabels(List<String> labels) {
+    public GameType setLabels(HashMap<String, String> labels) {
         this.labels = labels;
         return this;
     }

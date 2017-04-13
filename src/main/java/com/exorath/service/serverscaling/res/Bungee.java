@@ -35,7 +35,7 @@ public class Bungee {
     @Property("env")
     private HashMap<String, String> env;
     @Property("labels")
-    private List<String> labels;
+    private HashMap<String, String> labels;
 
     public Bungee(String image) {
         this.image = image;
@@ -72,11 +72,11 @@ public class Bungee {
         return this;
     }
 
-    public List<String> getLabels() {
+    public HashMap<String, String> getLabels() {
         return labels;
     }
 
-    public Bungee setLabels(List<String> labels) {
+    public Bungee setLabels(HashMap<String, String> labels) {
         this.labels = labels;
         return this;
     }

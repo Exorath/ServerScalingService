@@ -32,18 +32,16 @@ import java.util.List;
 /**
  * Created by toonsev on 4/11/2017.
  */
-public class MongoKubeService implements Service {
+public class MongoService implements Service {
     private static final Morphia morphia = new Morphia();
 
     static {
         morphia.mapPackage("com.exorath.service.serverscaling.res");
     }
 
-    private KubernetesClient kubernetesClient;
     private Datastore datastore;
 
-    public MongoKubeService(KubernetesClient kubernetesClient, MongoClient mongoClient, String dbName) {
-        this.kubernetesClient = kubernetesClient;
+    public MongoService(MongoClient mongoClient, String dbName) {
         this.datastore = morphia.createDatastore(mongoClient, dbName);
     }
 

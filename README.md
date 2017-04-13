@@ -7,6 +7,9 @@ The ServerScalingService controls the deployment of more servers of specific typ
 #### Updates a game type
 
 **Request**:
+
+The name should must the gameId!
+
 ```json
 {
 "name": "mg_gw",
@@ -27,9 +30,10 @@ The ServerScalingService controls the deployment of more servers of specific typ
 }
 ```
 
+
 ### /bungee [POST]:
 #### Updates the bungee spec
-
+#### NOTICE: THE BUNGEE ENDPOINT IS CURRENTLY NOT IN USE!!!
 **Request**:
 ```json
 {
@@ -49,3 +53,12 @@ The ServerScalingService controls the deployment of more servers of specific typ
 "success": true
 }
 ```
+
+
+##Environment
+| Name | Value |
+| --------- | --- |
+| MONGO_URI | {mongo_uri} |
+| DB_NAME | {db name to store data} |
+| CONNECTOR_SERVICE_ADDRESS | {ConnectorService ip:port} |
+| KUBERNETES_ADDRESS | {Kubernetes url} |
