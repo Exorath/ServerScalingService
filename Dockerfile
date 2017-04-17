@@ -1,4 +1,4 @@
-FROM maven:3.3-jdk-8
+FROM maven:3.5-jdk-8
 MAINTAINER toonsevrin@gmail.com
 
 COPY . /usr/src/server/
