@@ -71,9 +71,9 @@ public class KubernetesScaler implements Runnable {
     }
 
     private int getScheduledAndShutdownOutdated(GameType gameType, int total) {
-        PodList pods = kubernetesClient.pods().withLabel("app", gameType.getName()).list();
+        PodList pods = kubernetesClient.pods().withLabel("app", getFullName(gameType.getName())).list();
         if (pods.getItems().size() > 100)
-            throw new RuntimeException("HARDCODED POD COUNT REACHED FOR " + gameType.getName() + ". Won't scale until this is lower then 100 instances.");
+            throw new RuntimeException("HARDCODED POD COUNT REACHED FOR " + getFullName(gameType.getName()) + ". Won't scale until this is lower then 100 instances.");
 
         int runningAndScheduled = 0;
         for (Pod pod : pods.getItems()) {
@@ -95,9 +95,12 @@ public class KubernetesScaler implements Runnable {
         kubernetesClient.pods().create(getGamePod(gameType));
     }
 
+    private String getFullName(String gameTypeName){
+        return "spigot-" + gameTypeName;
+    }
     private Pod getGamePod(GameType gameType) {
         Set<EnvVar> envVars = gameType.getEnv().entrySet().stream().map(entry -> new EnvVarBuilder().withName(entry.getKey()).withValue(entry.getValue()).build()).collect(Collectors.toSet());
-        String appName = "spigot-" + gameType.getName();
+        String appName = getFullName(gameType.getName());
 
         PodBuilder podBuilder = new PodBuilder().editOrNewSpec().addNewContainer()
                 .withName(appName)
