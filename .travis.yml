@@ -13,3 +13,6 @@ after_success:
     echo "version $TRAVIS_TAG" ;
     docker push "exorath/serverscalingservice:$TRAVIS_TAG" ;
     fi
+cache:
+  directories:
+  - $HOME/.m2
