@@ -99,13 +99,13 @@ public class KubernetesScaler implements Runnable {
         Set<EnvVar> envVars = gameType.getEnv().entrySet().stream().map(entry -> new EnvVarBuilder().withName(entry.getKey()).withValue(entry.getValue()).build()).collect(Collectors.toSet());
         String appName = "spigot-" + gameType.getName();
 
-        PodBuilder podBuilder = new PodBuilder().withNewSpec().editFirstContainer()
+        PodBuilder podBuilder = new PodBuilder().editOrNewSpec().addNewContainer()
                 .withName(appName)
                 .withImage(gameType.getImage())
                 .addNewPort().withContainerPort(25565).withProtocol("TCP").and()
                 .addAllToEnv(envVars)
                 .withStdin(true).withTty(true).and().and()
-                .editMetadata().addToLabels(gameType.getLabels()).withDeletionGracePeriodSeconds((long) gameType.getTerminationGracePeriodSeconds())
+                .editOrNewMetadata().addToLabels(gameType.getLabels()).withDeletionGracePeriodSeconds((long) gameType.getTerminationGracePeriodSeconds())
                 .addToLabels("app", appName).and();
         return podBuilder.build();
     }
