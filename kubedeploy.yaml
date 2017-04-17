@@ -39,6 +39,6 @@ spec:
         - name: DB_NAME
           value: "connectorservice"
         - name: CONNECTOR_SERVICE_ADDRESS
-          value: "IP:PORT"
+          value: "http://IP:PORT"
         - name: KUBERNETES_ADDRESS
           value: "http://IP:PORT"
