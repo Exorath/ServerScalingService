@@ -52,7 +52,7 @@ public class Main {
     }
 
     private ConnectorServiceProvider getConnectorServiceProvider() {
-        return new ConnectorServiceProvider(new ConnectorServiceAPI(TableNameProvider.getEnvironmentTableNameProvider("CONNECTOR_SERVICE_ADDRESS").toString()));
+        return new ConnectorServiceProvider(new ConnectorServiceAPI(TableNameProvider.getEnvironmentTableNameProvider("CONNECTOR_SERVICE_ADDRESS").getTableName()));
     }
 
     private KubernetesClient getKubernetesClient() {
