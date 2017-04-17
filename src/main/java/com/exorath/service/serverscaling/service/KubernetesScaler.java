@@ -105,7 +105,7 @@ public class KubernetesScaler implements Runnable {
                 .addNewPort().withContainerPort(25565).withProtocol("TCP").and()
                 .addAllToEnv(envVars)
                 .withStdin(true).withTty(true).and().and()
-                .editOrNewMetadata().withName(gameType.getName()).addToLabels(gameType.getLabels()).withDeletionGracePeriodSeconds((long) gameType.getTerminationGracePeriodSeconds())
+                .editOrNewMetadata().withGenerateName(gameType.getName()).addToLabels(gameType.getLabels()).withDeletionGracePeriodSeconds((long) gameType.getTerminationGracePeriodSeconds())
                 .addToLabels("app", appName).and();
         return podBuilder.build();
     }
