@@ -28,17 +28,24 @@ import io.fabric8.kubernetes.client.KubernetesClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by toonsev on 4/11/2017.
  */
 public class Main {
     private Service service;
     private KubernetesScaler kubernetesScaler;
+    private final ScheduledExecutorService scheduler =
+            Executors.newScheduledThreadPool(2);
     private static final Logger LOG = LoggerFactory.getLogger(com.exorath.service.connector.Main.class);
 
     public Main() {
-        this.kubernetesScaler = new KubernetesScaler(service, getKubernetesClient(), getConnectorServiceProvider());
         this.service = new MongoService(MongoProvider.getEnvironmentMongoProvider().getClient(), TableNameProvider.getEnvironmentTableNameProvider("DB_NAME").getTableName());
+        this.kubernetesScaler = new KubernetesScaler(service, getKubernetesClient(), getConnectorServiceProvider());
+        scheduler.scheduleAtFixedRate(kubernetesScaler, 0, 10, TimeUnit.SECONDS);
         LOG.info("Service " + this.service.getClass() + " instantiated");
         Transport.setup(service, PortProvider.getEnvironmentPortProvider());
         LOG.info("HTTP Transport initiated");
