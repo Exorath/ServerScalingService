@@ -35,10 +35,12 @@ spec:
         - name: PORT
           value: "8080"
         - name: MONGO_URI
-          value: "<INSERT_URI>"
+          value: "mongodb://IP:PORT"
         - name: DB_NAME
           value: "connectorservice"
         - name: CONNECTOR_SERVICE_ADDRESS
           value: "http://IP:PORT"
         - name: KUBERNETES_ADDRESS
           value: "http://IP:PORT"
+        - name: KUBERNETES_CERTS_CA_DATA
+          value: "INSERT_TOKEN"
