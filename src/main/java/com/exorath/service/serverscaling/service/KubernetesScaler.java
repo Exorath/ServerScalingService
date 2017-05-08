@@ -66,7 +66,7 @@ public class KubernetesScaler implements Runnable {
     private void scaleGameType(GameType gameType) {
         ServerInfo serverInfo = connectorServiceProvider.getInfo(gameType);
         if (serverInfo.getOpenServerCount() <= 0)
-            if (getScheduledAndShutdownOutdated(gameType, serverInfo.getServerCount()) <= 0)
+            if (getScheduledAndShutdownOutdated(gameType, serverInfo.getOpenServerCount()) <= 0)
                 scheduleServer(gameType);
     }
 
