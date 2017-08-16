@@ -26,8 +26,10 @@ import com.exorath.service.serverscaling.res.Success;
 public interface Service {
     Success registerGameType(GameType gameType);
 
+    @Deprecated
     Success registerBungee(Bungee bungee);
 
+    @Deprecated
     Bungee getBungee();
 
     GameType getGameType(String name);
